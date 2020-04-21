@@ -3,15 +3,13 @@ const express = require("express");
 // const items = require("./routes/api/items");
 const cors = require("cors");
 const graphqlHTTP = require("express-graphql");
-const schema = require('./config/schema');
+const schema = require("./config/schema");
 
 const app = express();
 const { setupDB } = require("./config/db");
-
-setupDB((v) => console.log(v));
+setupDB();
 app.use(express.json());
 app.use(cors());
-
 
 app.use(
   "/graphql",

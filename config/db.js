@@ -1,27 +1,28 @@
-const mongoose = require("mongodb").MongoClient;
+const mongoose = require("mongoose");
 const config = require("config");
 const uri = config.get("mongoURI");
 let mongoDB;
 
-const setupDB = (callback) => {
-
-  mongoose.connect(
-    uri,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    (err, client) => {
-      mongoDB = client.db("ECommerce");
-
-      if (err) {
-        return callback(err);
-      } else {
-        return callback("DB OK");
-      }
-    }
-  );
+const setupDB = async () => {
+  let message;
+  await mongoose
+    .connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    .then((res) => {
+      mongoDB = res;
+      message = "MongoDB Connected..."
+    })
+    .catch((err) => {
+      message = `Error: ${err}`
+    });
+    console.log(message)
+    return message;
 };
-
 const getDB = () => {
   return mongoDB;
 };
 
-module.exports = {setupDB, getDB}
+module.exports = { setupDB, getDB };
