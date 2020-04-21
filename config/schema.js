@@ -33,7 +33,6 @@ const BookType = new GraphQLObjectType({
     author: {
       type: AuthorType,
       resolve(parent, args) {
-          console.log(parent)
         return _.find(authors, { id: parent.authorId });
       },
     },
@@ -73,6 +72,18 @@ const RootQuery = new GraphQLObjectType({
         return _.find(authors, { id: args.id });
       },
     },
+    books: {
+      type: GraphQLList(BookType),
+      resolve (parent, args) {
+        return books
+      }
+    },
+    authors: {
+      type: GraphQLList(AuthorType),
+      resolve (parent, args) {
+        return authors
+      }
+    }
   },
 });
 
