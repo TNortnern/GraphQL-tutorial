@@ -31,6 +31,7 @@ const AddBook = (props) => {
           },
           refetchQueries: [{ query: getBooksQuery }]
         });
+        console.log(props);
       }}
     >
       <div className="field">
